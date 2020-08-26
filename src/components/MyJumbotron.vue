@@ -1,21 +1,26 @@
 <template>
   <div>
-    <listTodo v-bind:list="item"/> 
+    <listTodo 
+      :list="list" 
+      :update="updateClass"
+    /> 
+    <AddForm
+      :addItem="addItem"
+      v-on:add-item="addItem"
+    />
   </div>
 </template>
 
 <script>
-import listTodo from "./listTodo"
+import listTodo from "./ListTodo"
+import AddForm from "./AddForm"
 
 export default {
-  components: { listTodo },
+  components: { listTodo, AddForm },
   props: {
-    list: Array
-  },
-  data () {
-    return {
-      item: this.list
-    }
+    list: Array,
+    addItem: Function,
+    updateClass: Function
   }
 }
 </script>

@@ -1,15 +1,40 @@
 <template>
-<div>
-  <b-icon-check2-circle></b-icon-check2-circle>
-</div>
+  <div class="img">
+    <div>
+      <input type="checkbox" class="check-circle" v-model="completed" @click="pass_id(keys, completed)" />
+    </div>
+  </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import { BootstrapVueIcons } from 'bootstrap-vue'
-import 'bootstrap-vue/dist/bootstrap-vue-icons.min.css'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-export default {}
+export default {
+  props: {
+    keys: Number,
+    todo: Boolean
+  },
+  data () {
+    return {
+      completed: false,
+    }
+  },
+  methods: {
+    pass_id: function(id, status){
+      this.$emit("current-id", id, status)
+    }
+  }
+}
 
-Vue.use(BootstrapVueIcons)
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
 </script>
+
+<style scoped>
+  .img{
+    margin-right: 1rem;
+  }
+</style>
