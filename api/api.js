@@ -1,8 +1,18 @@
 const express = require('express')
 const api = express()
+const BodyParser = require('body-parser')
 
+// PORT SERVE
 const PORT = 8000
 
+// MODELS
+var { ToDoModel } = require('../models/todoModel.js')
+
+// MIDLE
+api.use(BodyParser.json());
+api.use(BodyParser.urlencoded({ extended: true }));
+
+// ROUTES 
 api.get('/todo', async (req, res) => {
   res.send().status(200)
 })
@@ -11,10 +21,18 @@ api.get('/todo:id', async (req, res) => {
   res.send().status(200)
 })
 
-api.post('/todo:id', async (req, res) => {
-  res.send().status(200)
+api.post('/todo:id', async (req, res, next) => {
+  try {
+    const todo = new ToDoModel(req.body);
+    const result = await todo.save();
+    res.send(result);
+  } catch (error) {
+    next(error)
+  }
 })
 
 api.put('/todo:id', async (req, res) => {
   res.send().status(200)
 })
+
+api.listen(PORT)
