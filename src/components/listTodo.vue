@@ -3,7 +3,7 @@
     <ul>
       <li class="listBox" v-for="item in list" :key="item.id">
         <imgs :keys="item.id" :todo="item.todo" v-on:current-id="update"/> 
-        <div :class="{barre: item.todo === false}" >
+        <div :class="{barre: !item.todo}" >
           {{ item.name }}
         </div>
       </li>

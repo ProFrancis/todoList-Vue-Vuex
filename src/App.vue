@@ -11,11 +11,10 @@
 
 <script>
 import MyJumbotron from './components/MyJumbotron.vue'
-import AddForm from './components/AddForm.vue'
 
 export default {
   name: 'App',
-  components: { MyJumbotron, AddForm },
+  components: { MyJumbotron },
   data () {
     return {
       list: [
