@@ -10,7 +10,6 @@
 export default {
   props: {
     keys: Number,
-    todo: Boolean
   },
   data () {
     return {
