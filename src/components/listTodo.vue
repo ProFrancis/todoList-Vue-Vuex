@@ -1,24 +1,33 @@
 <template>
-  <div>
+  <section>
     <ul>
-      <li v-for="item in list" :key="item.id">
-        <imgs /> {{ item.name }}
+      <li class="listBox" v-for="item in list" :key="item.id">
+        <imgs :keys="item.id" :todo="item.todo" v-on:current-id="update"/> 
+        <div :class="{barre: !item.todo}" >
+          {{ item.name }}
+        </div>
       </li>
     </ul>
-  </div>
+  </section>
 </template>
 
 <script>
-import imgs from "./singleTodo"
+import imgs from "./SingleTodo"
 
 export default {
 components: { imgs },
  props: {
-    list: Array
+    list: Array,
+    update: Function,
   }
 }
 </script>
 
 <style scoped>
-
+  .listBox {
+    display: flex;
+  }
+  .barre{
+    text-decoration: line-through;
+  }
 </style>

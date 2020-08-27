@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <MyJumbotron v-bind:list="list" />
+    <MyJumbotron 
+      :list="list" 
+      :updateClass="update_class" 
+      :addItem="add"
+    />
   </div>
 </template>
 
@@ -10,9 +14,7 @@ import MyJumbotron from './components/MyJumbotron.vue'
 
 export default {
   name: 'App',
-  components: {
-    MyJumbotron
-  },
+  components: { MyJumbotron },
   data () {
     return {
       list: [
@@ -21,6 +23,19 @@ export default {
         {id: 2, name: "Vendre le sujet", todo: true},
         {id: 3, name: "Partir en vaccances", todo: true},
       ]
+    }
+  },
+  methods: {
+    update_class: function(id, status){
+      this.list[id].todo = status
+    },
+    add: function(newTodo){
+      let id_item = this.list.length + 1
+      this.list.push({
+        id: id_item,
+        name: newTodo,
+        todo: true
+      })
     }
   }
 }
