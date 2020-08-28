@@ -1,12 +1,11 @@
-const Mongoose = require('mongoose')
-const URL_MONGOOSE = "mongodb://localhost:27017/todo"
+const mongoose = require('mongoose')
+let MONGOOSE_URL = "mongodb://localhost:27017/todo"
+let database;
 
-connectMongoose = async () => {
-  try{
-    return await Mongoose.connect(URL_MONGOOSE, { useNewUrlParser: true, useUnifiedTopology: true });
-  }catch(err){
-    console.error(" ERROR MONGO => ", err)
+module.exports.mongooseConnect =  () => {
+  mongoose.connect(MONGOOSE_URL,{ useNewUrlParser: true, useUnifiedTopology: true });
+  return { 
+    model: mongoose.model,
+    schema: mongoose.Schema
   }
 }
-
-exports.connectMongoose = connectMongoose

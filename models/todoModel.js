@@ -1,11 +1,12 @@
-const { connectMongoose } = require('../libs/mongoose.js')
-const Mongoose = connectMongoose()
+const mongooseConnect = require('../libs/mongoose.js')
 
-const ToDoModel = Mongoose.model("todo", {
+let { model, schema } = mongooseConnect.mongooseConnect()
+
+const schemaTodo = new schema({
   name: String,
   id: Number,
   createdAt: String,
   todo: Boolean,
 });
 
-exports.ToDoModel = ToDoModel
+module.exports = model('todo', schemaTodo)
