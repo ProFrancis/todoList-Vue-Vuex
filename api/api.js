@@ -8,7 +8,6 @@ const PORT = 8000
 // MODEL
 let todo = require('../models/todoModel.js')
 
-
 // MIDLE
 api.use(BodyParser.json());
 api.use(BodyParser.urlencoded({ extended: true }));
@@ -29,10 +28,8 @@ api.get('/todo:id', async (req, res) => {
 
 api.post('/todo:id', async (req, res, next) => {
   try {
-    console.log("IN POST => ", result)
-    const todo = new todo(req.body);
-    const result = await todo.save();
-    console.log("IN GET => ", result)
+    const newTodo = new todo(req.body);
+    const result = await newTodo.save();
     res.json(result);
   } catch (error) {
     next(error)
