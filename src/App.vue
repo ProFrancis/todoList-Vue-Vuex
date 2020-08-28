@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
+    <MyHeader/>
     <MyJumbotron 
       :list="list" 
       :updateClass="update_class" 
@@ -11,10 +11,11 @@
 
 <script>
 import MyJumbotron from './components/MyJumbotron.vue'
+import MyHeader from './components/MyHeader.vue'
 
 export default {
   name: 'App',
-  components: { MyJumbotron },
+  components: { MyJumbotron, MyHeader },
   data () {
     return {
       list: [
@@ -30,7 +31,7 @@ export default {
       this.list[id].todo = status
     },
     add: function(newTodo){
-      let id_item = this.list.length + 1
+      let id_item = this.list.length
       this.list.push({
         id: id_item,
         name: newTodo,
