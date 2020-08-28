@@ -1,6 +1,6 @@
 <template>
   <div>
-    <listTodo 
+    <ListTodo 
       :list="list" 
       :update="updateClass"
     /> 
@@ -12,11 +12,11 @@
 </template>
 
 <script>
-import listTodo from "./ListTodo"
+import ListTodo from "./ListTodo"
 import AddForm from "./AddForm"
 
 export default {
-  components: { listTodo, AddForm },
+  components: { ListTodo, AddForm },
   props: {
     list: Array,
     addItem: Function,
