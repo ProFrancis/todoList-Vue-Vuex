@@ -1,8 +1,11 @@
 <template>
   <div id="app">
     <MyHeader/>
-    <MyJumbotron 
-      :addItem="add"
+    <MyJumbotron
+      :getRequest="getRequest" 
+      :route="$route.fullPath"
+      :slotDefault="{loading, error, state}"
+      :addItem="post_class"
       :updateClass="update_class" 
       :deleteClass="delete_class"
       :key="componentKey"
@@ -18,7 +21,8 @@ import MyJumbotron from './components/MyJumbotron.vue'
 import MyHeader from './components/MyHeader.vue'
 
 // CONFIG
-import {  POST_URL, 
+import {  GET_URL,
+          POST_URL, 
           PUT_URL, 
           DELETE_URL } from '../config/routeRequest'
 
@@ -27,13 +31,20 @@ export default {
   components: { MyJumbotron, MyHeader },
   data () {
     return { 
-      state: null,
+      state: {},
       post: {},
       componentKey: 0,
+      loading: false,
+      error: false
+    }
+  },
+  computed: {
+    getRoute() {
+      return this.$route.params
     }
   },
   methods: {
-    add: function(newTodo){
+    post_class: function(newTodo){
       this.post = {
         id: 2,
         name: newTodo,
@@ -49,6 +60,18 @@ export default {
     },    
     delete_class: function(id){
       this.deleteRequest(id)
+    },    
+    async getRequest(){
+      this.loading = true
+      try{
+        const { data } = await axios.get(GET_URL)
+        this.state = data
+        console.log("DATA GET --> ", data)
+      }catch(error){
+        this.error = error
+        console.error("ERRORS GET REQUEST --> ", this.error)
+      }
+      this.loading = false
     },
     async postRequest(id, body){
       try{
@@ -56,7 +79,8 @@ export default {
         this.state = data
         console.log("DATA POSTED --> ", this.state)
       }catch(error){
-        console.error("ERRORS POST REQUEST --> ", error)
+        this.error = error
+        console.error("ERRORS POST REQUEST --> ", this.error )
       }
     },
     async putRequest(id){
@@ -64,7 +88,8 @@ export default {
         const { data } = await axios.put(PUT_URL + `:${id}`)
         console.log(" DATA UPDATED --> ", data)
       }catch(error){
-        console.error("ERRORS PUT REQUEST --> ", error)
+        this.error = error
+        console.error("ERRORS PUT REQUEST --> ", this.error )
       }
     },
     async deleteRequest(id){
@@ -72,11 +97,19 @@ export default {
         const { data } = await axios.delete(DELETE_URL + `:${id}`)
         console.log(" DATA DELETE --> ", data)
       }catch(error){
-        console.error("ERRORS DELETE REQUEST --> ", error)
+        this.error = error
+        console.error("ERRORS DELETE REQUEST --> ", this.error)
       }
     },
     forceRerender() {
       this.componentKey += 1;
+    },
+    render(){
+      return this.$scopedSlots.default({
+        loading: this.loading,
+        error: this.error,
+        state: this.state
+      })
     }
   }
 }

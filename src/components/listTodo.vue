@@ -1,10 +1,10 @@
 <template v-slot:default="{ loading, error, state }">
-  <section v-if="$route.fullPath === '/list'"> 
-    <div v-if="loading">Loading ...</div>
-    <div v-else-if="error">{{ error }}</div>
+  <section v-if="route === '/list'"> 
+    <div v-if="slotDefault.loading">Loading ...</div>
+    <div v-else-if="slotDefault.error">{{ slotDefault.error }}</div>
     <div v-else>
       <ul>
-        <li class="block" v-for="(item, id) in state" :key="id">
+        <li class="block" v-for="(item, id) in slotDefault.state" :key="id">
           <div class="block" v-if="item.isActive && whatToDisplay == 'all' ">
             <SingleTodo :keys="item.id" v-on:current-id="update"/> 
             <div :class="{barre: !item.todo}" >
@@ -15,12 +15,12 @@
       </ul>
     </div>
   </section>
-  <section v-else-if="$route.fullPath === '/done'"> 
-    <div v-if="loading">Loading ...</div>
-    <div v-else-if="error">{{ error }}</div>
+  <section v-else-if="route === '/done'"> 
+    <div v-if="slotDefault.loading">Loading ...</div>
+    <div v-else-if="slotDefault.error">{{ slotDefault.error }}</div>
     <div v-else>
       <ul>
-        <li class="block" v-for="(item, id) in state" :key="id">
+        <li class="block" v-for="(item, id) in slotDefault.state" :key="id">
           <div class="block" v-if="item.isActive && item.todo === false && whatToDisplay == 'done'">
             <SingleTodo :keys="item.id" v-on:current-id="update"/> 
             <div :class="{barre: !item.todo}" >
@@ -32,11 +32,11 @@
     </div>
   </section>
     <section v-else> 
-    <div v-if="loading">Loading ...</div>
-    <div v-else-if="error">{{ error }}</div>
+    <div v-if="slotDefault.loading">Loading ...</div>
+    <div v-else-if="slotDefault.error">{{ slotDefault.error }}</div>
     <div v-else>
       <ul>
-        <li class="block" v-for="(item, id) in state" :key="id">
+        <li class="block" v-for="(item, id) in slotDefault.state" :key="id">
           <div class="block" v-if="item.isActive && item.todo === true && whatToDisplay == 'todo'">
             <SingleTodo :keys="item.id" v-on:current-id="update"/> 
             <div :class="{barre: !item.todo}" >
@@ -50,56 +50,21 @@
 </template>
 
 <script>
-import axios from "axios"
-
 // COMPONENTS
 import SingleTodo from "./SingleTodo"
-
-// CONFIG
-import { GET_URL } from '../../config/routeRequest'
 
 export default {
 components: { SingleTodo },
   props: {
+    slotDefault: Object,
+    route: String,
+    getRequest: Function,
     update: Function,
     delete: Function,
     whatToDisplay: String
   },
-  data () {
-    return {
-      loading: true,
-      state: null,
-      error: false
-    }
-  },
   mounted () {
     this.getRequest()
-  },
-  methods: {
-    async getRequest(){
-      try{
-        this.loading = true
-        const { data } = await axios.get(GET_URL)
-        this.state = data
-        console.log(this.state)
-      }catch(error){
-        this.data = null
-        this.error = error
-      }
-      this.loading = false
-    }
-  },
-  computed: {
-    getRoute() {
-      return this.$route.params
-    }
-  },
-  render(){
-    return this.$scopedSlots.default({
-      loading: this.loading,
-      error: this.error,
-      state: this.state
-    })
   }
 }
 </script>
