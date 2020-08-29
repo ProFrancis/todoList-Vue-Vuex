@@ -1,7 +1,7 @@
 <template>
   <div class="img">
     <div>
-      <input type="checkbox" class="check-circle" v-model="completed" @click="pass_id(keys, completed)" />
+      <input type="checkbox" class="check-circle" @click="pass_id(keys)" />
     </div>
   </div>
 </template>
@@ -11,14 +11,9 @@ export default {
   props: {
     keys: Number,
   },
-  data () {
-    return {
-      completed: false,
-    }
-  },
   methods: {
-    pass_id: function(id, status){
-      this.$emit("current-id", id, status)
+    pass_id: function(id){
+      this.$emit("current-id", id)
     }
   }
 }

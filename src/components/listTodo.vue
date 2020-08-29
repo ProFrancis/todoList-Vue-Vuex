@@ -4,10 +4,12 @@
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
       <ul>
-        <li class="listBox" v-for="(item, id) in state" :key="id">
-          <SingleTodo :keys="id" :todo="item.todo" v-on:current-id="update"/> 
-          <div :class="{barre: !item.todo}" >
-            {{ item.name }}
+        <li class="block" v-for="(item, id) in state" :key="id">
+          <div class="block" v-if="item.isActive">
+            <SingleTodo :keys="item.id" v-on:current-id="update"/> 
+            <div :class="{barre: !item.todo}" >
+              {{ item.name }}
+            </div>
           </div>
        </li>
       </ul>
@@ -64,7 +66,7 @@ components: { SingleTodo },
 </script>
 
 <style scoped>
-  .listBox {
+  .block {
     display: flex;
   }
   .barre{

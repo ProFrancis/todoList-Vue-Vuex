@@ -1,4 +1,4 @@
-const mongooseConnect = require('../libs/mongoose.js')
+const mongooseConnect = require('../config/mongoose.js')
 
 let { model, schema } = mongooseConnect.mongooseConnect()
 
@@ -12,6 +12,11 @@ const requiredNumber = {
   required: true
 }
 
+const requiredBoolean ={
+  type: Boolean,
+  required: true
+}
+
 const defaultDate = {
   type: Date,
   default: Date.now,
@@ -21,7 +26,10 @@ const defaultDate = {
 const schemaTodo = new schema({
   name: requiredString,
   id: requiredNumber,
+  todo: requiredBoolean,
+  isActive: requiredBoolean,
+  createdAt: requiredString,
   created_at: defaultDate,
 });
 
-module.exports = model('todo', schemaTodo)
+module.exports = model('todoModel', schemaTodo)

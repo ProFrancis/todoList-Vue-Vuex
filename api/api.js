@@ -7,7 +7,7 @@ const cors = require('cors')
 const PORT = 8000
 
 // MODEL
-let todo = require('../models/todoModel.js')
+let todoModel = require('../models/todoModel.js')
 
 // MIDLE
 api.use(cors());
@@ -17,29 +17,56 @@ api.use(BodyParser.urlencoded({ extended: true }));
 // ROUTES 
 api.get('/todo', async (req, res, next) => {
   try{
-    const result = await todo.find()
+    const result = await todoModel.find()
     res.json(result).status(200)
-  }catch (err){
-    next(err)
+  }catch (error){
+    next(error)
   }
 })
 
-api.get('/todo:id', async (req, res) => {
-  res.send().status(200)
+api.get('/todo:id', async (req, res, next) => {
+  try{
+    const id = req.params.id.replace(":", "")  
+    const result = await todoModel.findOne({"id": id})
+    res.json(result).status(200)
+  }catch (error){
+    next(error)
+  }
 })
 
 api.post('/todo:id', async (req, res, next) => {
   try {
-    const newTodo = new todo(req.body);
+    const newTodo = new todoModel(req.body);
     const result = await newTodo.save();
-    res.json(result);
+    res.json(result).status(200)
   } catch (error) {
     next(error)
   }
 })
 
-api.put('/todo:id', async (req, res) => {
-  res.send().status(200)
+api.put('/todo:id', async (req, res, next) => {
+  try{
+    const id = req.params.id.replace(":", "")
+    const result = await todoModel.findOne({"id": id})
+    const todo = result.todo ? false : !result.todo ? true : "ERROR"
+    result.todo = todo
+    await result.save()
+    res.json(result).status(200)
+  }catch(error){
+    next(error)
+  }
+})
+
+api.delete('/todo:id', async (req, res, next) => {
+  try{
+    const id = req.params.id.replace(":", "")
+    const result = await todoModel.findOne({"id": id})
+    result.isActive = false
+    await result.save()
+    res.json(result).status(200)
+  }catch(error){
+    next(error)
+  }
 })
 
 api.listen(PORT)
