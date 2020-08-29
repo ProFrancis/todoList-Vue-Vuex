@@ -1,9 +1,9 @@
 <template>
-  <section style="display:flex; flex-direction: column; width: 300px">
-    <div style="text-align: initial;">
+  <section class="block">
+    <div class="blockTwo">
       <label for="todo">New Item : {{ newTodo }}</label>
     </div>
-    <div style="display:flex;">
+    <div class="blockThree">
       <input type="text" id="todo" placeholder="Name" v-model="newTodo">
       <button @click="add_item(newTodo)">+</button>
     </div>
@@ -11,7 +11,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'Form',
   props: {
@@ -26,7 +25,21 @@ export default {
     add_item: function(newItem){
       this.$emit("add-item", newItem)
       this.newTodo = ''
-    }
+    },
   }
 }
 </script>
+
+<style scoped>
+.block{
+  display:flex; 
+  flex-direction: column; 
+  width: 300px;
+}
+.blockTwo{
+  text-align: initial;
+}
+.blockThree{
+  display: flex;
+}
+</style>

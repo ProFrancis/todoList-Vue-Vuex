@@ -8,3 +8,9 @@
     </nav>
   </section>
 </template>
+
+<style scoped>
+  a{
+    margin: 1rem;
+  }
+</style>

@@ -10,6 +10,11 @@
 </template>
 
 <script>
+import axios from "axios"
+
+// CONFIG
+import { POST_URL } from '../config/routeRequest'
+
 import MyJumbotron from './components/MyJumbotron.vue'
 import MyHeader from './components/MyHeader.vue'
 
@@ -17,26 +22,34 @@ export default {
   name: 'App',
   components: { MyJumbotron, MyHeader },
   data () {
-    return {
-      list: [
-        {id: 0, name: "Ecrire le sujet", todo: true},
-        {id: 1, name: "Faire le sujet", todo: true},
-        {id: 2, name: "Vendre le sujet", todo: true},
-        {id: 3, name: "Partir en vaccances", todo: true},
-      ]
+    return { 
+      state: null,
+      post: {}
     }
   },
   methods: {
     update_class: function(id, status){
-      this.list[id].todo = status
+      this.post[id].todo = status
     },
     add: function(newTodo){
-      let id_item = this.list.length
-      this.list.push({
-        id: id_item,
+      this.post = {
+        id: 9,
         name: newTodo,
         todo: true
-      })
+      }
+      console.log(" IN ADD POST ---> ", this.post)
+      this.getRequest(this.post.id, this.post)
+    },
+    async getRequest(id, body){
+      try{
+        const { data } = await axios.post(POST_URL + `:${id}`,body)
+        this.state = data
+        console.log("DATA POST ---> ", this.state)
+      }catch(error){
+        this.error = error
+        console.error("ERRORS ---> ", error)
+      }
+      this.loading = false
     }
   }
 }

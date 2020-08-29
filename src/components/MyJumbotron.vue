@@ -1,13 +1,16 @@
 <template>
   <div>
-    <router-view/>
+    <router-view
+      :addItem="addItem"
+      :update="updateClass"
+      v-on:add-item="addItem"
+    />
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    list: Array,
     addItem: Function,
     updateClass: Function
   }

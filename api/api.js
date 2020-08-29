@@ -1,6 +1,7 @@
 const express = require('express')
 const api = express()
 const BodyParser = require('body-parser')
+const cors = require('cors')
 
 // PORT SERVE
 const PORT = 8000
@@ -9,6 +10,7 @@ const PORT = 8000
 let todo = require('../models/todoModel.js')
 
 // MIDLE
+api.use(cors());
 api.use(BodyParser.json());
 api.use(BodyParser.urlencoded({ extended: true }));
 
