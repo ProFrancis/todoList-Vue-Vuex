@@ -4,6 +4,7 @@
     <MyJumbotron 
       :updateClass="update_class" 
       :addItem="add"
+      :key="componentKey"
     />
   </div>
 </template>
@@ -23,12 +24,14 @@ export default {
   data () {
     return { 
       state: null,
-      post: {}
+      post: {},
+      componentKey: 0,
     }
   },
   methods: {
     update_class: function(id){
       this.putRequest(id)
+      this.forceRerender()
     },
     add: function(newTodo){
       this.post = {
@@ -42,7 +45,7 @@ export default {
     },
     async postRequest(id, body){
       try{
-        const { data } = await axios.post(POST_URL + `:${id}`,body)
+        const { data } = await axios.post(POST_URL + `:${id}`, body)
         this.state = data
         console.log("DATA POSTED --> ", this.state)
       }catch(error){
@@ -58,6 +61,9 @@ export default {
         console.error("ERRORS PUT REQUEST --> ", error)
       }
       this.loading = false
+    },
+    forceRerender() {
+      this.componentKey += 1;
     }
   }
 }

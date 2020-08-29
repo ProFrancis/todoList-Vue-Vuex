@@ -1,11 +1,43 @@
 <template v-slot:default="{ loading, error, state }">
-  <section>
+  <section v-if="$route.fullPath === '/list'"> 
     <div v-if="loading">Loading ...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
       <ul>
         <li class="block" v-for="(item, id) in state" :key="id">
-          <div class="block" v-if="item.isActive">
+          <div class="block" v-if="item.isActive && whatToDisplay == 'all' ">
+            <SingleTodo :keys="item.id" v-on:current-id="update"/> 
+            <div :class="{barre: !item.todo}" >
+              {{ item.name }}
+            </div>
+          </div>
+       </li>
+      </ul>
+    </div>
+  </section>
+  <section v-else-if="$route.fullPath === '/done'"> 
+    <div v-if="loading">Loading ...</div>
+    <div v-else-if="error">{{ error }}</div>
+    <div v-else>
+      <ul>
+        <li class="block" v-for="(item, id) in state" :key="id">
+          <div class="block" v-if="item.isActive && item.todo === false && whatToDisplay == 'done'">
+            <SingleTodo :keys="item.id" v-on:current-id="update"/> 
+            <div :class="{barre: !item.todo}" >
+              {{ item.name }}
+            </div>
+          </div>
+       </li>
+      </ul>
+    </div>
+  </section>
+    <section v-else> 
+    <div v-if="loading">Loading ...</div>
+    <div v-else-if="error">{{ error }}</div>
+    <div v-else>
+      <ul>
+        <li class="block" v-for="(item, id) in state" :key="id">
+          <div class="block" v-if="item.isActive && item.todo === true && whatToDisplay == 'todo'">
             <SingleTodo :keys="item.id" v-on:current-id="update"/> 
             <div :class="{barre: !item.todo}" >
               {{ item.name }}
@@ -30,6 +62,7 @@ export default {
 components: { SingleTodo },
   props: {
     update: Function,
+    whatToDisplay: String
   },
   data () {
     return {
@@ -40,6 +73,7 @@ components: { SingleTodo },
   },
   mounted () {
     this.getRequest()
+    console.log("DATA COMPONENT =>", this.$route.fullPath)
   },
   methods: {
     async getRequest(){
@@ -53,6 +87,11 @@ components: { SingleTodo },
         this.error = error
       }
       this.loading = false
+    }
+  },
+  computed: {
+    username() {
+      return this.$route.params
     }
   },
   render(){
