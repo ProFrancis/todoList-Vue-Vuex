@@ -2,8 +2,9 @@
   <div id="app">
     <MyHeader/>
     <MyJumbotron 
-      :updateClass="update_class" 
       :addItem="add"
+      :updateClass="update_class" 
+      :deleteClass="delete_class"
       :key="componentKey"
     />
   </div>
@@ -12,11 +13,14 @@
 <script>
 import axios from "axios"
 
-// CONFIG
-import { POST_URL, PUT_URL } from '../config/routeRequest'
-
+// COMPONENTS 
 import MyJumbotron from './components/MyJumbotron.vue'
 import MyHeader from './components/MyHeader.vue'
+
+// CONFIG
+import {  POST_URL, 
+          PUT_URL, 
+          DELETE_URL } from '../config/routeRequest'
 
 export default {
   name: 'App',
@@ -29,10 +33,6 @@ export default {
     }
   },
   methods: {
-    update_class: function(id){
-      this.putRequest(id)
-      this.forceRerender()
-    },
     add: function(newTodo){
       this.post = {
         id: 2,
@@ -43,6 +43,13 @@ export default {
       }
       this.postRequest(this.post.id, this.post)
     },
+    update_class: function(id){
+      this.putRequest(id)
+      this.forceRerender()
+    },    
+    delete_class: function(id){
+      this.deleteRequest(id)
+    },
     async postRequest(id, body){
       try{
         const { data } = await axios.post(POST_URL + `:${id}`, body)
@@ -51,7 +58,6 @@ export default {
       }catch(error){
         console.error("ERRORS POST REQUEST --> ", error)
       }
-      this.loading = false
     },
     async putRequest(id){
       try{
@@ -60,7 +66,14 @@ export default {
       }catch(error){
         console.error("ERRORS PUT REQUEST --> ", error)
       }
-      this.loading = false
+    },
+    async deleteRequest(id){
+      try{
+        const { data } = await axios.delete(DELETE_URL + `:${id}`)
+        console.log(" DATA DELETE --> ", data)
+      }catch(error){
+        console.error("ERRORS DELETE REQUEST --> ", error)
+      }
     },
     forceRerender() {
       this.componentKey += 1;

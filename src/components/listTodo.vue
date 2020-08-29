@@ -62,6 +62,7 @@ export default {
 components: { SingleTodo },
   props: {
     update: Function,
+    delete: Function,
     whatToDisplay: String
   },
   data () {
@@ -73,7 +74,6 @@ components: { SingleTodo },
   },
   mounted () {
     this.getRequest()
-    console.log("DATA COMPONENT =>", this.$route.fullPath)
   },
   methods: {
     async getRequest(){
@@ -90,7 +90,7 @@ components: { SingleTodo },
     }
   },
   computed: {
-    username() {
+    getRoute() {
       return this.$route.params
     }
   },

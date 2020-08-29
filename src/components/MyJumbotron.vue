@@ -3,6 +3,7 @@
     <router-view
       :addItem="addItem"
       :update="updateClass"
+      :delete="deleteClass"
       v-on:add-item="addItem"
     />
   </div>
@@ -12,7 +13,8 @@
 export default {
   props: {
     addItem: Function,
-    updateClass: Function
+    updateClass: Function,
+    deleteClass: Function,
   }
 }
 </script>
