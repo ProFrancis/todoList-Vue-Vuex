@@ -5,7 +5,7 @@
       :route="route"
       :addItem="addItem"
       :update="updateClass"
-      :delete="deleteClass"
+      :deleteItem="deleteClass"
       :getRequest="getRequest"
       v-on:add-item="addItem"
     />

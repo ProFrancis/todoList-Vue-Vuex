@@ -10,6 +10,7 @@
             <div :class="{barre: !item.todo}" >
               {{ item.name }}
             </div>
+            <DeleteForm :keys="item.id" v-on:delete-item="deleteItem"/>
           </div>
        </li>
       </ul>
@@ -26,6 +27,7 @@
             <div :class="{barre: !item.todo}" >
               {{ item.name }}
             </div>
+            <DeleteForm :keys="item.id" v-on:delete-item="deleteItem"/>
           </div>
        </li>
       </ul>
@@ -42,6 +44,7 @@
             <div :class="{barre: !item.todo}" >
               {{ item.name }}
             </div>
+            <DeleteForm :keys="item.id" v-on:delete-item="deleteItem"/>
           </div>
        </li>
       </ul>
@@ -52,20 +55,21 @@
 <script>
 // COMPONENTS
 import SingleTodo from "./SingleTodo"
+import DeleteForm from "./DeleteForm"
 
 export default {
-components: { SingleTodo },
+components: { SingleTodo, DeleteForm },
   props: {
     slotDefault: Object,
     route: String,
     getRequest: Function,
     update: Function,
-    delete: Function,
+    deleteItem: Function,
     whatToDisplay: String
   },
   mounted () {
     this.getRequest()
-  }
+  },
 }
 </script>
 

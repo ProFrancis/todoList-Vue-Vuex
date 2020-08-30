@@ -34,7 +34,7 @@ export default {
       state: {},
       post: {},
       componentKey: 0,
-      loading: false,
+      loading: true,
       error: false
     }
   },
@@ -60,6 +60,7 @@ export default {
     },    
     delete_class: function(id){
       this.deleteRequest(id)
+      console.log("IN DELETED => ", id)
     },    
     async getRequest(){
       this.loading = true
@@ -76,8 +77,7 @@ export default {
     async postRequest(id, body){
       try{
         const { data } = await axios.post(POST_URL + `:${id}`, body)
-        this.state = data
-        console.log("DATA POSTED --> ", this.state)
+        console.log("DATA POSTED --> ", data)
       }catch(error){
         this.error = error
         console.error("ERRORS POST REQUEST --> ", this.error )
