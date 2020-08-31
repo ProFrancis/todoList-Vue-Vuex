@@ -33,10 +33,17 @@ export default {
     return { 
       state: {},
       post: {},
+      id: 0,
       componentKey: 0,
       loading: true,
       error: false
     }
+  },
+  mounted () {
+    this.getRequest()
+  },
+  updated: function () {
+    console.log("HOOKS UPDATED ")
   },
   computed: {
     getRoute() {
@@ -46,7 +53,7 @@ export default {
   methods: {
     post_class: function(newTodo){
       this.post = {
-        id: 2,
+        id: this.id++,
         name: newTodo,
         todo: true,
         isActive: true,
@@ -56,18 +63,17 @@ export default {
     },
     update_class: function(id){
       this.putRequest(id)
-      this.forceRerender()
     },    
     delete_class: function(id){
       this.deleteRequest(id)
-      console.log("IN DELETED => ", id)
     },    
     async getRequest(){
       this.loading = true
       try{
         const { data } = await axios.get(GET_URL)
         this.state = data
-        console.log("DATA GET --> ", data)
+        this.id = data.length
+        console.log("DATA GET --> ",  data)
       }catch(error){
         this.error = error
         console.error("ERRORS GET REQUEST --> ", this.error)
@@ -87,6 +93,7 @@ export default {
       try{
         const { data } = await axios.put(PUT_URL + `:${id}`)
         console.log(" DATA UPDATED --> ", data)
+        this.forceRerender()
       }catch(error){
         this.error = error
         console.error("ERRORS PUT REQUEST --> ", this.error )
@@ -96,12 +103,13 @@ export default {
       try{
         const { data } = await axios.delete(DELETE_URL + `:${id}`)
         console.log(" DATA DELETE --> ", data)
+        this.forceRerender()
       }catch(error){
         this.error = error
         console.error("ERRORS DELETE REQUEST --> ", this.error)
       }
     },
-    forceRerender() {
+    forceRerender: function() {
       this.componentKey += 1;
     },
     render(){

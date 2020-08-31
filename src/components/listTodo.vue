@@ -1,15 +1,11 @@
-<template v-slot:default="{ loading, error, state }">
+<template v-slot:default="{ loading, error , state }">
   <section v-if="route === '/list'"> 
-    <div v-if="slotDefault.loading">Loading ...</div>
-    <div v-else-if="slotDefault.error">{{ slotDefault.error }}</div>
+    <div v-if="slotDefault.error">{{ slotDefault.error }}</div>
     <div v-else>
       <ul>
         <li class="block" v-for="(item, id) in slotDefault.state" :key="id">
           <div class="block" v-if="item.isActive && whatToDisplay == 'all' ">
-            <SingleTodo :keys="item.id" v-on:current-id="update"/> 
-            <div :class="{barre: !item.todo}" >
-              {{ item.name }}
-            </div>
+            <SingleTodo :keys="item.id" :data="item" v-on:current-id="update"/> 
             <DeleteForm :keys="item.id" v-on:delete-item="deleteItem"/>
           </div>
        </li>
@@ -23,10 +19,7 @@
       <ul>
         <li class="block" v-for="(item, id) in slotDefault.state" :key="id">
           <div class="block" v-if="item.isActive && item.todo === false && whatToDisplay == 'done'">
-            <SingleTodo :keys="item.id" v-on:current-id="update"/> 
-            <div :class="{barre: !item.todo}" >
-              {{ item.name }}
-            </div>
+            <SingleTodo :keys="item.id" :data="item" v-on:current-id="update"/> 
             <DeleteForm :keys="item.id" v-on:delete-item="deleteItem"/>
           </div>
        </li>
@@ -40,10 +33,7 @@
       <ul>
         <li class="block" v-for="(item, id) in slotDefault.state" :key="id">
           <div class="block" v-if="item.isActive && item.todo === true && whatToDisplay == 'todo'">
-            <SingleTodo :keys="item.id" v-on:current-id="update"/> 
-            <div :class="{barre: !item.todo}" >
-              {{ item.name }}
-            </div>
+            <SingleTodo :keys="item.id" :data="item" v-on:current-id="update"/> 
             <DeleteForm :keys="item.id" v-on:delete-item="deleteItem"/>
           </div>
        </li>
@@ -76,8 +66,5 @@ components: { SingleTodo, DeleteForm },
 <style scoped>
   .block {
     display: flex;
-  }
-  .barre{
-    text-decoration: line-through;
   }
 </style>

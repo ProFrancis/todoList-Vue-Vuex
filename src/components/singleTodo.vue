@@ -1,7 +1,7 @@
 <template>
   <div class="img">
     <div>
-      <input type="checkbox" class="check-circle" @click="pass_id(keys)"/>
+      <button  :class="{barre: !data.todo}" @click="pass_id(keys)" >{{ data.name }}</button>
     </div>
   </div>
 </template>
@@ -10,14 +10,12 @@
 export default {
   props: {
     keys: Number,
+    data: Object
   },
   methods: {
     pass_id: function(id){
       this.$emit("current-id", id)
     },
-    delete_id: function(id){
-      this.$emit("delete-id", id)
-    }
   }
 }
 </script>
@@ -25,5 +23,8 @@ export default {
 <style scoped>
   .img{
     margin-right: 1rem;
+  }
+  .barre{
+    text-decoration: line-through;
   }
 </style>
