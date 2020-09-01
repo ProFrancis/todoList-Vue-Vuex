@@ -24,17 +24,16 @@ api.get('/todo', async (req, res, next) => {
   }
 })
 
-api.get('/todo:id', async (req, res, next) => {
+api.get('/todo/:id', async (req, res, next) => {
   try{
-    const id = req.params.id.replace(":", "")  
-    const result = await todoModel.findOne({"id": id})
+    const result = await todoModel.findOne({"id": req.params.id})
     res.json(result).status(200)
   }catch (error){
     next(error)
   }
 })
 
-api.post('/todo:id', async (req, res, next) => {
+api.post('/todo', async (req, res, next) => {
   try {
     const newTodo = new todoModel(req.body);
     const result = await newTodo.save();
@@ -44,10 +43,9 @@ api.post('/todo:id', async (req, res, next) => {
   }
 })
 
-api.put('/todo:id', async (req, res, next) => {
+api.put('/todo/:id', async (req, res, next) => {
   try{
-    const id = req.params.id.replace(":", "")
-    const result = await todoModel.findOne({"id": id})
+    const result = await todoModel.findOne({"id": req.params.id})
     const todo = result.todo ? false : !result.todo ? true : "ERROR"
     result.todo = todo
     await result.save()
@@ -57,10 +55,9 @@ api.put('/todo:id', async (req, res, next) => {
   }
 })
 
-api.delete('/todo:id', async (req, res, next) => {
+api.delete('/todo/:id', async (req, res, next) => {
   try{
-    const id = req.params.id.replace(":", "")
-    const result = await todoModel.findOne({"id": id})
+    const result = await todoModel.findOne({"id": req.params.id})
     result.isActive = false
     await result.save()
     res.json(result).status(200)

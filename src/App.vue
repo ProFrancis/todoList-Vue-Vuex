@@ -31,19 +31,20 @@ export default {
   components: { MyJumbotron, MyHeader },
   data () {
     return { 
-      state: {},
-      post: {},
       id: 0,
-      componentKey: 0,
+      state: {},
+      date: null,
+      error: false,
       loading: true,
-      error: false
+      componentKey: 0,
     }
   },
   mounted () {
     this.getRequest()
+    this.getDate()
   },
   updated: function () {
-    console.log("HOOKS UPDATED ")
+    console.log("HOOKS UPDATED")
   },
   computed: {
     getRoute() {
@@ -51,15 +52,21 @@ export default {
     }
   },
   methods: {
+    getDate: function (){
+      const date = new Date()
+      const options = {weekday: "long", year: "numeric", month: "long", day: "numeric"};
+      const getDate = date.toLocaleDateString('eu-FR', options)
+      this.date = getDate
+    },
     post_class: function(newTodo){
-      this.post = {
+      this.state = {
         id: this.id++,
         name: newTodo,
         todo: true,
         isActive: true,
-        createdAt: "date"
+        createdAt: this.date
       }
-      this.postRequest(this.post.id, this.post)
+      this.postRequest(this.state.id, this.state)
     },
     update_class: function(id){
       this.putRequest(id)
@@ -82,7 +89,7 @@ export default {
     },
     async postRequest(id, body){
       try{
-        const { data } = await axios.post(POST_URL + `:${id}`, body)
+        const { data } = await axios.post(POST_URL, body)
         console.log("DATA POSTED --> ", data)
       }catch(error){
         this.error = error
@@ -91,7 +98,7 @@ export default {
     },
     async putRequest(id){
       try{
-        const { data } = await axios.put(PUT_URL + `:${id}`)
+        const { data } = await axios.put(PUT_URL + `/${id}`)
         console.log(" DATA UPDATED --> ", data)
         this.forceRerender()
       }catch(error){
@@ -101,7 +108,7 @@ export default {
     },
     async deleteRequest(id){
       try{
-        const { data } = await axios.delete(DELETE_URL + `:${id}`)
+        const { data } = await axios.delete(DELETE_URL + `/${id}`)
         console.log(" DATA DELETE --> ", data)
         this.forceRerender()
       }catch(error){
@@ -129,7 +136,15 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-color: gray;
+}
+a{
+  margin: 1rem;
+  color: black;
+  text-decoration: none;
+}
+li{
+  list-style: none;
+  text-align: center;
 }
 </style>

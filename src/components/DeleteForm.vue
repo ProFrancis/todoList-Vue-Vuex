@@ -1,6 +1,8 @@
 <template>
   <div>
-    <button @click="delete_id(keys)">X</button>
+    <button @click="delete_id(keys)">
+      <b-icon icon="trash" aria-hidden="true"></b-icon>
+    </button>
   </div>
 </template>
 
@@ -16,3 +18,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  button{
+    border: none;
+    cursor: pointer;
+    background-color: #ffffff00;
+  }
+</style>

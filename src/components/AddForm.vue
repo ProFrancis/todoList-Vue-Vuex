@@ -1,18 +1,19 @@
 <template>
-  <section class="block">
-    <div class="blockTwo">
-      <label for="todo">New Item : {{ newTodo }}</label>
-    </div>
-    <div class="blockThree">
-      <input type="text" id="todo" placeholder="Name" v-model="newTodo">
-      <button @click="add_item(newTodo)">+</button>
-    </div>
-  </section>
+  <b-container>
+      <b-row class="justify-content-md-center">
+        <b-nav-form>
+          <b-input-group prepend="New Task">
+            <b-form-input placeholder="todo" v-model="newTodo"></b-form-input>
+            <button @click="add_item(newTodo)">+ Add</button>
+          </b-input-group>
+        </b-nav-form>
+  </b-row>
+  </b-container>
 </template>
 
 <script>
 export default {
-  name: 'Form',
+  name: 'Form', 
   props: {
     addItem: Function
   },
@@ -31,15 +32,7 @@ export default {
 </script>
 
 <style scoped>
-.block{
-  display:flex; 
-  flex-direction: column; 
-  width: 300px;
-}
-.blockTwo{
-  text-align: initial;
-}
-.blockThree{
-  display: flex;
+.form-inline{
+  list-style: none;
 }
 </style>

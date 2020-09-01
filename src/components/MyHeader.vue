@@ -1,16 +1,19 @@
 <template>
-  <section>
-    <nav>
-      <router-link to="/new">New</router-link>
-      <router-link to="/list">list</router-link>
-      <router-link to="/done">Done</router-link>
-      <router-link to="/todo">Todo</router-link>
-    </nav>
-  </section>
+  <div>
+    <b-navbar type="dark" variant="dark">
+      <b-navbar-nav>
+        <b-nav-item href="#">TodList</b-nav-item>
+          <b-nav-item href="#"><router-link to="/new">New</router-link></b-nav-item>
+          <b-nav-item href="#"><router-link to="/list">list</router-link></b-nav-item>
+          <b-nav-item href="#"><router-link to="/done">Done</router-link></b-nav-item>
+          <b-nav-item href="#"><router-link to="/todo">Todo</router-link></b-nav-item>
+      </b-navbar-nav>
+    </b-navbar>
+  </div>
 </template>
 
 <style scoped>
-  a{
-    margin: 1rem;
+  .title{
+    color: #fafafa;
   }
 </style>
