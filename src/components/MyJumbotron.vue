@@ -11,7 +11,6 @@
       </p>
       <router-view
         :route="route"
-        :deleteItem="deleteClass"
         :slotDefault="slotDefault"
         :forceRerender="forceRerender"
       />
@@ -24,7 +23,6 @@ export default {
   props: {
     slotDefault: Object,
     route: String,
-    deleteClass: Function,
     forceRerender: Function
   }
 }

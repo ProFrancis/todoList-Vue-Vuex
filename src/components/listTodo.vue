@@ -9,7 +9,7 @@
               <li class="block" v-for="(value, id) in result" :key="id">
                 <b-col md="6" offset-md="3" class="block" v-if="value.isActive">
                   <SingleTodo :keys="value.id" :data="value" :forceRerender="forceRerender"/> 
-                  <DeleteForm :keys="value.id" v-on:delete-todo="deleteItem"/>
+                  <DeleteForm :keys="value.id" :forceRerender="forceRerender"/>
                 </b-col>
               </li>
             </ul>
@@ -30,11 +30,11 @@ import { mapState } from 'vuex'
 export default {
 components: { SingleTodo, DeleteForm },
   props: {
-    slotDefault: Object,
     route: String,
-    forceRerender: Function,
+    slotDefault: Object,
     deleteItem: Function,
     whatToDisplay: String,
+    forceRerender: Function
   },
   data () {
     return {

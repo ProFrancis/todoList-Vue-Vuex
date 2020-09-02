@@ -4,7 +4,6 @@
     <MyJumbotron
       :route="$route.fullPath"
       :slotDefault="{loading, error}"
-      :deleteClass="delete_class"
       :forceRerender="forceRerender"
       :key="componentKey"
     />
@@ -19,8 +18,7 @@ import MyJumbotron from './components/MyJumbotron.vue'
 import MyHeader from './components/MyHeader.vue'
 
 // CONFIG
-import {  GET_URL,
-          DELETE_URL } from '../config/routeRequest'
+import { GET_URL } from '../config/routeRequest'
 
 export default {
   name: 'App',
@@ -44,9 +42,6 @@ export default {
     this.getRequest()
  },
   methods: {
-    delete_class: function(id){
-      this.deleteRequest(id)
-    },    
     async getRequest(){
       this.loading = true
       try{
@@ -59,16 +54,6 @@ export default {
         console.error("ERRORS GET REQUEST --> ", this.error)
       }
       this.loading = false
-    },
-    async deleteRequest(id){
-      try{
-        const { data } = await axios.delete(DELETE_URL + `/${id}`)
-        console.log(" DATA DELETE --> ", data)
-        this.forceRerender()
-      }catch(error){
-        this.error = error
-        console.error("ERRORS DELETE REQUEST --> ", this.error)
-      }
     },
     forceRerender: function() {
       this.componentKey += 1;

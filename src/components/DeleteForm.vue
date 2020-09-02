@@ -1,19 +1,32 @@
 <template>
   <div>
-    <button @click="delete_id(keys)">
+    <button @click="deleteRequest(keys)">
       <b-icon icon="trash" aria-hidden="true"></b-icon>
     </button>
   </div>
 </template>
 
 <script>
+import axios from "axios"
+
+import { DELETE_URL } from '../../config/routeRequest'
+
 export default {
   props: {
-    keys: Number
+    keys: Number,
+    forceRerender: Function
   },
   methods: {
-    delete_id: function(id){
-      this.$emit("delete-item", id)
+    async deleteRequest(id){
+      try{
+        const { data } = await axios.delete(DELETE_URL + `/${id}`)
+        console.log(" DATA DELETE --> ", data)
+        this.$store.dispatch('ACTION_DELETE', data)
+        this.forceRerender()
+      }catch(error){
+        this.error = error
+        console.error("ERRORS DELETE REQUEST --> ", this.error)
+      }
     }
   }
 }

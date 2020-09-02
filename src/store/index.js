@@ -18,6 +18,9 @@ export const store = new Vuex.Store({
     },
     MUT_PUT(state, todo){
       state = todo
+    },
+    MUT_DELETE(state, todo){
+      state = todo
     }
   },
   actions: {
