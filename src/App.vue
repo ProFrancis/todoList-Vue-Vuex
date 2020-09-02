@@ -42,7 +42,7 @@ export default {
   mounted () {
     this.getRequest()
     this.getDate()
-  },
+ },
   updated: function () {
     console.log("HOOKS UPDATED")
   },
@@ -80,7 +80,7 @@ export default {
         const { data } = await axios.get(GET_URL)
         this.state = data
         this.id = data.length
-        console.log("DATA GET --> ",  data)
+        this.$store.dispatch('actionTodo', data) 
       }catch(error){
         this.error = error
         console.error("ERRORS GET REQUEST --> ", this.error)
@@ -90,6 +90,7 @@ export default {
     async postRequest(id, body){
       try{
         const { data } = await axios.post(POST_URL, body)
+        this.$store.dispatch('ADD_POST', body)
         console.log("DATA POSTED --> ", data)
       }catch(error){
         this.error = error
