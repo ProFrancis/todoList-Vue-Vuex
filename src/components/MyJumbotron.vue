@@ -12,11 +12,8 @@
       <router-view
         :slotDefault="slotDefault"
         :route="route"
-        :addItem="addItem"
         :update="updateClass"
         :deleteItem="deleteClass"
-        :getRequest="getRequest"
-        v-on:add-item="addItem"
       />
     </b-jumbotron>
   </div>
@@ -27,8 +24,6 @@ export default {
   props: {
     slotDefault: Object,
     route: String,
-    addItem: Function,
-    getRequest: Function,
     updateClass: Function,
     deleteClass: Function,
   }

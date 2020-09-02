@@ -2,10 +2,8 @@
   <div id="app">
     <MyHeader/>
     <MyJumbotron
-      :getRequest="getRequest" 
       :route="$route.fullPath"
-      :slotDefault="{loading, error, state}"
-      :addItem="post_class"
+      :slotDefault="{loading, error}"
       :updateClass="update_class" 
       :deleteClass="delete_class"
       :key="componentKey"
@@ -22,7 +20,6 @@ import MyHeader from './components/MyHeader.vue'
 
 // CONFIG
 import {  GET_URL,
-          POST_URL, 
           PUT_URL, 
           DELETE_URL } from '../config/routeRequest'
 
@@ -39,35 +36,15 @@ export default {
       componentKey: 0,
     }
   },
-  mounted () {
-    this.getRequest()
-    this.getDate()
- },
-  updated: function () {
-    console.log("HOOKS UPDATED")
-  },
   computed: {
     getRoute() {
       return this.$route.params
-    }
+    },
   },
+  mounted () {
+    this.getRequest()
+ },
   methods: {
-    getDate: function (){
-      const date = new Date()
-      const options = {weekday: "long", year: "numeric", month: "long", day: "numeric"};
-      const getDate = date.toLocaleDateString('eu-FR', options)
-      this.date = getDate
-    },
-    post_class: function(newTodo){
-      this.state = {
-        id: this.id++,
-        name: newTodo,
-        todo: true,
-        isActive: true,
-        createdAt: this.date
-      }
-      this.postRequest(this.state.id, this.state)
-    },
     update_class: function(id){
       this.putRequest(id)
     },    
@@ -80,22 +57,12 @@ export default {
         const { data } = await axios.get(GET_URL)
         this.state = data
         this.id = data.length
-        this.$store.dispatch('actionTodo', data) 
+        this.$store.dispatch('ACTION_GET', data) 
       }catch(error){
         this.error = error
         console.error("ERRORS GET REQUEST --> ", this.error)
       }
       this.loading = false
-    },
-    async postRequest(id, body){
-      try{
-        const { data } = await axios.post(POST_URL, body)
-        this.$store.dispatch('ADD_POST', body)
-        console.log("DATA POSTED --> ", data)
-      }catch(error){
-        this.error = error
-        console.error("ERRORS POST REQUEST --> ", this.error )
-      }
     },
     async putRequest(id){
       try{
@@ -124,7 +91,6 @@ export default {
       return this.$scopedSlots.default({
         loading: this.loading,
         error: this.error,
-        state: this.state
       })
     }
   }
