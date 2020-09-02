@@ -1,23 +1,40 @@
 <template>
-  <button :class="{barre: !data.todo}" @click="pass_id(keys)" >
-    <b-icon :icon="cls(data.todo)" @click="pass_id(keys)" aria-hidden="true"></b-icon>
+  <button :class="{barre: !data.todo}" @click="putRequest(keys)" >
+    <b-icon :icon="cls(data.todo)" @click="putRequest(keys)" aria-hidden="true"></b-icon>
     {{ data.name }}
   </button>
 </template>
 
 <script>
+import axios from "axios"
+
+import { PUT_URL } from '../../config/routeRequest'
+
 export default {
   props: {
     keys: Number,
-    data: Object
+    data: Object,
+    forceRerender: Function
+  },
+  data (){
+    return {
+      error: ""
+    }
   },
   methods: {
-    pass_id: function(id){
-      this.$emit("current-id", id)
-    },
     cls: function(todo){
      return !todo ?  "emoji-angry" : "check2-circle"
     },
+    async putRequest(id){
+      try{
+        const { data } = await axios.put(PUT_URL + `/${id}`)
+        this.$store.dispatch('ACTION_PUT', data)
+        this.forceRerender()
+      }catch(error){
+        this.error = error
+        console.error("ERRORS PUT REQUEST --> ", this.error )
+      }
+    }
   }
 }
 </script>

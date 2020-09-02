@@ -10,10 +10,9 @@
         easy to use, we created this web app just for you !
       </p>
       <router-view
-        :slotDefault="slotDefault"
         :route="route"
-        :update="updateClass"
         :deleteItem="deleteClass"
+        :slotDefault="slotDefault"
         :forceRerender="forceRerender"
       />
     </b-jumbotron>
@@ -25,7 +24,6 @@ export default {
   props: {
     slotDefault: Object,
     route: String,
-    updateClass: Function,
     deleteClass: Function,
     forceRerender: Function
   }

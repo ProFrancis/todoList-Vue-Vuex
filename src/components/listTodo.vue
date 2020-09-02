@@ -8,7 +8,7 @@
             <ul>
               <li class="block" v-for="(value, id) in result" :key="id">
                 <b-col md="6" offset-md="3" class="block" v-if="value.isActive">
-                  <SingleTodo :keys="value.id" :data="value" v-on:current-id="update"/> 
+                  <SingleTodo :keys="value.id" :data="value" :forceRerender="forceRerender"/> 
                   <DeleteForm :keys="value.id" v-on:delete-todo="deleteItem"/>
                 </b-col>
               </li>
@@ -32,8 +32,7 @@ components: { SingleTodo, DeleteForm },
   props: {
     slotDefault: Object,
     route: String,
-    getRequest: Function,
-    update: Function,
+    forceRerender: Function,
     deleteItem: Function,
     whatToDisplay: String,
   },

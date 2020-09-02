@@ -4,7 +4,6 @@
     <MyJumbotron
       :route="$route.fullPath"
       :slotDefault="{loading, error}"
-      :updateClass="update_class" 
       :deleteClass="delete_class"
       :forceRerender="forceRerender"
       :key="componentKey"
@@ -21,7 +20,6 @@ import MyHeader from './components/MyHeader.vue'
 
 // CONFIG
 import {  GET_URL,
-          PUT_URL, 
           DELETE_URL } from '../config/routeRequest'
 
 export default {
@@ -46,9 +44,6 @@ export default {
     this.getRequest()
  },
   methods: {
-    update_class: function(id){
-      this.putRequest(id)
-    },    
     delete_class: function(id){
       this.deleteRequest(id)
     },    
@@ -64,16 +59,6 @@ export default {
         console.error("ERRORS GET REQUEST --> ", this.error)
       }
       this.loading = false
-    },
-    async putRequest(id){
-      try{
-        const { data } = await axios.put(PUT_URL + `/${id}`)
-        console.log(" DATA UPDATED --> ", data)
-        this.forceRerender()
-      }catch(error){
-        this.error = error
-        console.error("ERRORS PUT REQUEST --> ", this.error )
-      }
     },
     async deleteRequest(id){
       try{

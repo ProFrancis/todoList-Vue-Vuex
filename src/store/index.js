@@ -16,12 +16,9 @@ export const store = new Vuex.Store({
     MUT_POST(state, todo){
       state = todo
     },
-    // MUT_PUT(payload){
-    //   this.state = payload
-    // },
-    // MUT_DELETE(payload){
-    //   console.log("DELETE => ", payload)
-    // }
+    MUT_PUT(state, todo){
+      state = todo
+    }
   },
   actions: {
     ACTION_GET({commit}, data){
