@@ -14,6 +14,7 @@
         :route="route"
         :update="updateClass"
         :deleteItem="deleteClass"
+        :forceRerender="forceRerender"
       />
     </b-jumbotron>
   </div>
@@ -26,6 +27,7 @@ export default {
     route: String,
     updateClass: Function,
     deleteClass: Function,
+    forceRerender: Function
   }
 }
 </script>

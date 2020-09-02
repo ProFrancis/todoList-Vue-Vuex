@@ -6,6 +6,7 @@
       :slotDefault="{loading, error}"
       :updateClass="update_class" 
       :deleteClass="delete_class"
+      :forceRerender="forceRerender"
       :key="componentKey"
     />
   </div>

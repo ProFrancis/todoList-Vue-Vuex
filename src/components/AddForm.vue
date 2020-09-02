@@ -19,6 +19,9 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'Form', 
+  props: {
+    forceRerender: Function
+  },
   data () {
     return {
       state: "",
@@ -47,6 +50,7 @@ export default {
         createdAt: this.date
       }
       this.postRequest(this.state.id, this.state)
+      this.forceRerender()
     },
     async postRequest(id, body){
       try{
