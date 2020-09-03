@@ -12,7 +12,6 @@
       <router-view
         :route="route"
         :slotDefault="slotDefault"
-        :forceRerender="forceRerender"
       />
     </b-jumbotron>
   </div>
@@ -21,9 +20,8 @@
 <script>
 export default {
   props: {
-    slotDefault: Object,
     route: String,
-    forceRerender: Function
+    slotDefault: Object,
   }
 }
 </script>

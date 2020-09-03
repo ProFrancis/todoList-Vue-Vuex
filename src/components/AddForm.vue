@@ -15,7 +15,7 @@
 import axios from "axios"
 
 import { POST_URL } from '../../config/routeRequest'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Form', 
@@ -31,7 +31,7 @@ export default {
       error: ""
     }
   },
-  computed: mapState(['todo']),
+  computed: mapGetters(['getList']),
   methods: {
     getDate: function (){
       const date = new Date()
@@ -41,7 +41,7 @@ export default {
     },
     add: function(content){
       this.date = this.getDate()
-      this.id = this.todo.length
+      this.id = this.getList
       this.state = {
         id: this.id++,
         name: content,
@@ -49,13 +49,13 @@ export default {
         isActive: true,
         createdAt: this.date
       }
+      this.content = ""
       this.postRequest(this.state.id, this.state)
-      this.forceRerender()
     },
     async postRequest(id, body){
       try{
-        const { data } = await axios.post(POST_URL, body)
-        this.$store.dispatch('ACTION_POST', data)
+        await axios.post(POST_URL, body)
+        this.$store.dispatch('ACTION_POST', body)
       }catch(error){
         this.error = error
         console.error("ERRORS POST REQUEST --> ", this.error)

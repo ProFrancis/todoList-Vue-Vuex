@@ -12,7 +12,7 @@ const requiredNumber = {
   required: true
 }
 
-const requiredBoolean ={
+const requiredBoolean = {
   type: Boolean,
   required: true
 }

@@ -14,7 +14,6 @@ export default {
   props: {
     keys: Number,
     data: Object,
-    forceRerender: Function
   },
   data (){
     return {
@@ -23,13 +22,12 @@ export default {
   },
   methods: {
     cls: function(todo){
-     return !todo ?  "emoji-angry" : "check2-circle"
+     return !todo ? "emoji-angry" : "check2-circle"
     },
     async putRequest(id){
       try{
-        const { data } = await axios.put(PUT_URL + `/${id}`)
-        this.$store.dispatch('ACTION_PUT', data)
-        this.forceRerender()
+        await axios.put(PUT_URL + `/${id}`)
+        this.$store.dispatch('ACTION_PUT', id)
       }catch(error){
         this.error = error
         console.error("ERRORS PUT REQUEST --> ", this.error )
@@ -47,6 +45,9 @@ export default {
     border: none;
     cursor: pointer;
     background-color: #ffffff00;
+  }
+  button:focus {
+    outline: none;
   }
   .barre{
     text-decoration: line-through;

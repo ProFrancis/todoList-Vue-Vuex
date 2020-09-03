@@ -19,10 +19,8 @@ export default {
   methods: {
     async deleteRequest(id){
       try{
-        const { data } = await axios.delete(DELETE_URL + `/${id}`)
-        console.log(" DATA DELETE --> ", data)
-        this.$store.dispatch('ACTION_DELETE', data)
-        this.forceRerender()
+        await axios.delete(DELETE_URL + `/${id}`)
+        this.$store.dispatch('ACTION_DELETE', id)
       }catch(error){
         this.error = error
         console.error("ERRORS DELETE REQUEST --> ", this.error)

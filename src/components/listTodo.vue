@@ -6,10 +6,10 @@
         <b-row align-v="center">
           <b-col md="6" offset-md="3">
             <ul>
-              <li class="block" v-for="(value, id) in result" :key="id">
+              <li class="block" v-for="(value, id) in getTodo(whatToDisplay)" :key="id">
                 <b-col md="6" offset-md="3" class="block" v-if="value.isActive">
-                  <SingleTodo :keys="value.id" :data="value" :forceRerender="forceRerender"/> 
-                  <DeleteForm :keys="value.id" :forceRerender="forceRerender"/>
+                  <SingleTodo :keys="value.id" :data="value"/> 
+                  <DeleteForm :keys="value.id"/>
                 </b-col>
               </li>
             </ul>
@@ -25,7 +25,7 @@
 import SingleTodo from "./SingleTodo"
 import DeleteForm from "./DeleteForm"
 
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
 components: { SingleTodo, DeleteForm },
@@ -34,24 +34,9 @@ components: { SingleTodo, DeleteForm },
     slotDefault: Object,
     deleteItem: Function,
     whatToDisplay: String,
-    forceRerender: Function
   },
-  data () {
-    return {
-      result: ""
-    }
-  },
-  beforeUpdate(){
-    if(this.whatToDisplay === "all"){
-      this.result = this.todo
-    }else if(this.whatToDisplay === "done"){
-      this.result = this.todo.map(item => item.todo === false ? item : "")
-    }else if(this.whatToDisplay === "todo"){
-      this.result = this.todo.map(item => item.todo === true ? item : "") 
-    }
-  },
-  computed: mapState([
-    'todo'
+  computed: mapGetters([
+    'getTodo'
   ])
 }
 </script>
