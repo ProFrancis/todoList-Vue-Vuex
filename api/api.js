@@ -46,8 +46,7 @@ api.post('/todo', async (req, res, next) => {
 api.put('/todo/:id', async (req, res, next) => {
   try{
     const result = await todoModel.findOne({"id": req.params.id})
-    const todo = result.todo ? false : !result.todo ? true : "ERROR"
-    result.todo = todo
+    result.todo = result.todo = !result.todo ? true : false
     await result.save()
     res.json(result).status(200)
   }catch(error){
